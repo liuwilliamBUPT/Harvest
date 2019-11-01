@@ -1,2 +1,2 @@
 # Harvest
-Make it easy to harvest eggs in game  *hens lay eggs*.
+Make it easy to harvest eggs in the game  *hens lay eggs*.
