@@ -1,8 +1,8 @@
 #!/bin/bash
 
-postRequestFunc(){
-    postRequst="curl --cookie ${projectPath}/cookies.txt ${postBaseUrl} -X POST -d ${postBody} | iconv -f gbk -t utf-8"
-    return postRequest
+postRequest(){
+    echo -e "---- "$(date)" ----" >> ${projectPath}/log.txt
+    curl --cookie ${projectPath}/cookies.txt ${postBaseUrl} -X POST -d ${postBody} | iconv -f gbk -t utf-8 >> ${projectPath}/log.txt
 }
 
 projectPath=$(cd `dirname $0`; pwd)
@@ -14,7 +14,7 @@ delayTime=$[$RANDOM/150]
 
 echo "Delay ${delayTime} Seconds" >> ${projectPath}/log.txt
 
-sleep $[$RANDOM/150]
+sleep $delayTime
 
 response=$(curl --cookie ${projectPath}/cookies.txt "http://jlpzj.net/plugin.php?id=jneggv2" | iconv -f gbk -t utf-8)
 
@@ -22,7 +22,7 @@ hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -
 
 eggs=$(echo ${response} | grep -o "鸡蛋 : [0-9]*粒" | grep -o "[0-9]*")
 
-money=$(echo ${response} | grep -o "家元： [0-9]* 元" | grep -o "[0-9]*")
+money=$(echo ${response} | grep -o "家元: [0-9]* 元" | grep -o "[0-9]*")
 
 getEggs="http://jlpzj.net/plugin.php?id=jneggv2:jneggv2&do=getegg&${hashStr}&infloat=yes&handlekey=joincom&inajax=1&ajaxtarget=fwin_content_joincom"
 
@@ -35,15 +35,16 @@ buyHen="${hashStr}&buychicsubmit=yes&handlekey=editmine&referer=http%3A%2F%2Fjlp
 getEggsRequest=$(curl --cookie ${projectPath}/cookies.txt ${getEggs} | iconv -f gbk -t utf-8)
 echo -e "---- "$(date)" ---- \n"$getEggsRequest >> ${projectPath}/log.txt
 
+echo -e "---- "$(date)" ----" >> ${projectPath}/log.txt
+echo -e "Eggs: ${eggs} Money: ${money}" >> ${projectPath}/log.txt
+
 if [[ ${eggs} -gt 60 ]]; then
     postBody=${sellEggs}
-    sellEggsRequest=$(postRequestFunc)
-    echo -e "----"$(date)" ---- \n"${sellEggRequest} >> ${projectPath}/log.txt
+    postRequest
 fi
 
 if [[ ${money} -gt 20 ]]; then
     postBody=${buyHen}
-    buyHenRequset=$(postRequestFunc)
-    echo -e "----"$(date)" ---- \n"${buyHenRequest} >> ${projectPath}/log.txt
+    postRequest
 fi
 
