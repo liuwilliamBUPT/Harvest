@@ -20,6 +20,12 @@ response=$(curl --cookie ${projectPath}/cookies.txt "http://jlpzj.net/plugin.php
 
 hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -o "formhash=[a-zA-Z0-9]\{8\}")
 
+if [[ $(date "+%H") -eq 12 ]]; then
+    postBaseUrl="http://jlpzj.net/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&inajax=1"
+    postBody="formhash=b2cd756f&qdxq=yl&qdmode=3&todaysay=&fastreply=0"
+    postRequest
+fi
+
 getEggs="http://jlpzj.net/plugin.php?id=jneggv2:jneggv2&do=getegg&${hashStr}&infloat=yes&handlekey=joincom&inajax=1&ajaxtarget=fwin_content_joincom"
 
 getEggsRequest=$(curl --cookie ${projectPath}/cookies.txt ${getEggs} | iconv -f gbk -t utf-8)
