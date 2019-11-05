@@ -18,3 +18,5 @@ For example:
 ```
 
 Last, copy your cookies using *Export cookies.txt* Chrome plugin, and paste in cookies.txt.
+
+Please note that only when the crontab interval is a factor of 12 can the newest feature work. 
