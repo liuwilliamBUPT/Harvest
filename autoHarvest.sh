@@ -30,9 +30,11 @@ hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -
 eggs=$(echo ${response} | grep -o "鸡蛋 : [0-9]*粒" | grep -o "[0-9]*")
 postBaseUrl="http://jlpzj.net/plugin.php?id=jneggv2:jneggv2&inajax=1"
 
-sellEggs="${hashStr}&changeeggsubmit=yes&handlekey=changeeggsubmit&referer=http%3A%2F%2Fjlpzj.net%2Fplugin.php%3Fid%3Djneggv2&paymount=60"
+remainderE=$((${eggs}%3))
+sellNum=$((${eggs}-${remainderE}))
+sellEggs="${hashStr}&changeeggsubmit=yes&handlekey=changeeggsubmit&referer=http%3A%2F%2Fjlpzj.net%2Fplugin.php%3Fid%3Djneggv2&paymount=${sellNum}"
 
-if [[ ${eggs} -gt 60 ]]; then
+if [[ ${sellNum} -gt 0 ]]; then
     postBody=${sellEggs}
     postRequest
 fi
@@ -41,9 +43,11 @@ response=$(curl --cookie ${projectPath}/cookies.txt "http://jlpzj.net/plugin.php
 hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -o "formhash=[a-zA-Z0-9]\{8\}")
 money=$(echo ${response} | grep -o "家元: [0-9]* 元" | grep -o "[0-9]*")
 
-buyHen="${hashStr}&buychicsubmit=yes&handlekey=editmine&referer=http%3A%2F%2Fjlpzj.net%2Fplugin.php%3Fid%3Djneggv2&paymount=1"
+remainderM=$((${money}%20))
+buyNum=$(((${money}-${remainderM})/20))
+buyHen="${hashStr}&buychicsubmit=yes&handlekey=editmine&referer=http%3A%2F%2Fjlpzj.net%2Fplugin.php%3Fid%3Djneggv2&paymount=${buyNum}"
 
-if [[ ${money} -gt 20 ]]; then
+if [[ ${buyNum} -gt 0 ]]; then
     postBody=${buyHen}
     postRequest
 fi
