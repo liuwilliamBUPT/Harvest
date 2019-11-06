@@ -22,7 +22,7 @@ hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -
 
 if [[ $(date "+%H") -eq 12 ]]; then
     postBaseUrl="http://jlpzj.net/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&inajax=1"
-    postBody="formhash=b2cd756f&qdxq=yl&qdmode=3&todaysay=&fastreply=0"
+    postBody="${hashStr}&qdxq=yl&qdmode=3&todaysay=&fastreply=0"
     postRequest
 fi
 
