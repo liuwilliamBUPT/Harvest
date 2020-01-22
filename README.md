@@ -19,4 +19,11 @@ For example:
 
 Last, copy your cookies using *Export cookies.txt* Chrome plugin, and paste in cookies.txt.
 
+If necessary, you can excute these command to add your ServerChan SCEKEY to inform you that your cookies have been expired.
+```bash=
+touch secret_key
+vim secret_key
+```
+
+
 Please note that only when the crontab interval is a factor of 12 can the newest feature work. 
