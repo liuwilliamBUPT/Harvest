@@ -19,11 +19,15 @@ For example:
 
 Last, copy your cookies using *Export cookies.txt* Chrome plugin, and paste in cookies.txt.
 
-If necessary, you can execute these commands to add your ServerChan SCEKEY to inform you that your cookies have been expired.
+If necessary, you can execute these commands to add your ServerChan SCEKEY or your [qqbot](https://github.com/cqmoe/python-cqhttp) setting to inform you that your cookies have been expired.
 ```bash=
-touch secret_key
-vim secret_key
+vim config
+
+secret_key=your_serverchan_secret_key
+qqbot_host=host:port
+token=your_qqbot_token
+qq=your_qq_id
 ```
 
 
-Please note that only when the crontab interval is a factor of 12 can the newest feature work. 
+Please note that only when the crontab interval is a factor of 12 can the newest feature that automatically checks in at midnight work. 
