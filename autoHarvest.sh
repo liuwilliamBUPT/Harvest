@@ -8,7 +8,6 @@ postRequest(){
 projectPath=$(cd `dirname $0`; pwd)
 
 source config
-echo ${qqbot_host} ${token} ${qq}
 
 if [ -z ${secret_key} ]; then
 	secret_key=$(cat ${projectPath}/secret_key)
@@ -32,14 +31,14 @@ cookies_expired=$(echo ${response} | grep -o "您的所在用户组没权限可�
 
 if [ "${secret_key}" ]; then
 	if [ "${cookies_expired}" ]; then
-		curl "https://sc.ftqq.com/${secret_key}.send?text=纪录片之家cookies过期。"
+		curl "https://sc.ftqq.com/${secret_key}.send?text=纪录片之家cookies过期。" >> ${projectPath}/log.txt
 		flag1=1
 	fi
 fi
 
 if [ "${qqbot_host}" ]; then
     if [ "${cookies_expired}" ]; then
-        curl "http://${qqbot_host}/send_private_msg?access_token=${token}&user_id=${qq}&message=Cookies过期"
+        curl "http://${qqbot_host}/send_private_msg?access_token=${token}&user_id=${qq}&message=Cookies过期" >> ${projectPath}/log.txt
         flag2=1
     fi
 fi
