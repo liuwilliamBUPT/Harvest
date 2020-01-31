@@ -7,8 +7,14 @@ postRequest(){
 
 projectPath=$(cd `dirname $0`; pwd)
 
+source config
+
 if [ -z ${secret_key} ]; then
 	secret_key=$(cat ${projectPath}/secret_key)
+fi
+
+if [ -z ${qqbot_host} ]; then
+    qqbot_host=$(cat ${projectPath}/qqbot_host)
 fi
 
 echo "---- $(date) ---- " >> ${projectPath}/log.txt
@@ -21,13 +27,20 @@ echo "Delay ${delayTime} Seconds" >> ${projectPath}/log.txt
 sleep $delayTime
 
 response=$(curl --cookie ${projectPath}/cookies.txt "http://jlpzj.net/plugin.php?id=jneggv2" | iconv -f gbk -t utf-8)
+cookies_expired=$(echo ${response} | grep -o "您的所在用户组没权限可进入。")
 
 if [ "${secret_key}" ]; then
-	cookies_expired=$(echo ${response} | grep -o "您的所在用户组没权限可进入。")
 	if [ "${cookies_expired}" ]; then
 		curl "https://sc.ftqq.com/${secret_key}.send?text=纪录片之家cookies过期。"
 		exit
 	fi
+fi
+
+if [ "${qqbot_host}" ]; then
+    if [ "${cookies_expired}" ]; then
+        curl "http://{qqbot_host}/send_private_msg?access_token=${token}&user_id=${qq}&message=Cookies过期"
+        exit
+    fi
 fi
 
 hashStr=$(echo ${response} | grep -o "getegg&formhash=[a-zA-Z0-9]\{8\}" | grep -o "formhash=[a-zA-Z0-9]\{8\}")
