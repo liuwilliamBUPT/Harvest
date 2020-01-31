@@ -29,6 +29,9 @@ sleep $delayTime
 response=$(curl --cookie ${projectPath}/cookies.txt "http://jlpzj.net/plugin.php?id=jneggv2" | iconv -f gbk -t utf-8)
 cookies_expired=$(echo ${response} | grep -o "您的所在用户组没权限可进入。")
 
+flag1=0
+flag2=0
+
 if [ "${secret_key}" ]; then
 	if [ "${cookies_expired}" ]; then
 		curl "https://sc.ftqq.com/${secret_key}.send?text=纪录片之家cookies过期。" >> ${projectPath}/log.txt
