@@ -7,7 +7,7 @@ postRequest(){
 
 projectPath=$(cd `dirname $0`; pwd)
 
-source config
+source ${projectPath}/config
 
 if [ -z ${secret_key} ]; then
 	secret_key=$(cat ${projectPath}/secret_key)
